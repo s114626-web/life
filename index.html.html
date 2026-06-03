@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>隨機人生模擬器 Plus v3</title>
+<style>
+body{font-family:"Microsoft JhengHei",sans-serif;background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;margin:0;padding:20px}
+.container{max-width:1200px;margin:auto}
+button{padding:14px 28px;border:none;border-radius:12px;background:#3b82f6;color:#fff;font-size:18px;cursor:pointer}
+.card{background:#1e293bcc;padding:20px;border-radius:16px;margin-top:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.box{background:#334155;padding:12px;border-radius:10px}
+h1,h2{text-align:center}
+svg{max-width:220px;display:block;margin:auto}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🌍 隨機人生模擬器 Plus v3</h1>
+<div style="text-align:center"><button onclick="generateLife()">開始人生</button></div>
+<div id="output"></div>
+</div>
+
+<script>
+const countries={
+"台灣":["漢人","原住民族"],
+"日本":["東亞人"],
+"韓國":["東亞人"],
+"中國":["漢族"],
+"印度":["南亞人"],
+"泰國":["東南亞人"],
+"越南":["東南亞人"],
+"德國":["歐洲白人"],
+"法國":["歐洲白人"],
+"英國":["歐洲白人"],
+"義大利":["歐洲白人"],
+"美國":["歐洲裔","亞裔","拉丁裔"],
+"加拿大":["歐洲裔","亞裔"],
+"巴西":["混血","拉丁裔"],
+"阿根廷":["拉丁裔"],
+"澳洲":["歐洲裔"],
+"紐西蘭":["歐洲裔"],
+"埃及":["北非人"]
+};
+
+const jobs={
+"台灣":["工程師","教師","醫師"],
+"日本":["工程師","研究員","動畫師"],
+"韓國":["工程師","設計師","教師"],
+"中國":["企業家","工程師","教師"],
+"印度":["軟體工程師","醫師","教授"],
+"default":["教師","律師","商人","記者","科學家"]
+};
+
+const genders=["男性","女性"];
+const names=["Alex","Chris","Kevin","Emma","Lily","Yuki","Hana","David","Jason","Sophia"];
+
+function rand(a){return a[Math.floor(Math.random()*a.length)]}
+
+function avatar(){
+return `<svg viewBox="0 0 200 240">
+<circle cx="100" cy="80" r="45" fill="#f1c27d"/>
+<rect x="60" y="130" width="80" height="80" rx="10" fill="#2563eb"/>
+<circle cx="85" cy="75" r="3"/><circle cx="115" cy="75" r="3"/>
+<path d="M85 95 Q100 105 115 95" stroke="black" fill="none"/>
+</svg>`;
+}
+
+function generateLife(){
+const country=rand(Object.keys(countries));
+const race=rand(countries[country]);
+const gender=rand(genders);
+const name=rand(names);
+const job=rand(jobs[country]||jobs.default);
+
+const wealth=Math.floor(Math.random()*101);
+const happiness=Math.floor(Math.random()*101);
+const achievement=Math.floor(Math.random()*101);
+const health=Math.floor(Math.random()*101);
+
+const age=60+Math.floor(Math.random()*35);
+
+const events=[
+"6歲開始上學",
+"18歲高中畢業",
+"22歲進入職場",
+"28歲結婚",
+"31歲第一個孩子出生",
+"40歲職涯高峰",
+"55歲退休"
+];
+
+document.getElementById("output").innerHTML=`
+<div class="card">
+${avatar()}
+<h2>${name}</h2>
+<div class="grid">
+<div class="box">國家：${country}</div>
+<div class="box">族群：${race}</div>
+<div class="box">性別：${gender}</div>
+<div class="box">職業：${job}</div>
+<div class="box">享年：${age}</div>
+<div class="box">財富：${wealth}</div>
+<div class="box">幸福：${happiness}</div>
+<div class="box">成就：${achievement}</div>
+<div class="box">健康：${health}</div>
+</div>
+
+<h2>人生大事紀</h2>
+<ul>${events.map(e=>`<li>${e}</li>`).join("")}</ul>
+
+<h2>人生故事</h2>
+<p>
+${name}出生於${country}，屬於${race}族群。
+成年後成為${job}，透過努力逐步建立自己的事業與家庭。
+在人生過程中累積財富、成就與人際關係，並留下屬於自己的故事。
+最終於${age}歲完成人生旅程。
+</p>
+</div>`;
+}
+</script>
+</body>
+</html>
